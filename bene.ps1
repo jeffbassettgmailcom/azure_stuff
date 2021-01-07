@@ -1,25 +1,17 @@
+
 Connect-AzAccount
 Get-AzSubscription
 #$vms | ?{$_.LicenseType -like "Windows_Server"} | select ResourceGroupName, Name, LicenseType
 
-$filename='.\HybridBenefit.html'
+$filename='.\HybridBenefit.csv'
+Add-Content -Path $filename -Value 'Subscription, VM Name, VM Type, Publisher, Offer, SKU, License Type'
 foreach ($Subscription in $(Get-AzSubscription| Where-Object {$_.State -ne "Disabled"}))
 {
     Select-AzSubscription -SubscriptionId $Subscription.SubscriptionId
     $vms = Get-AzVM
-    $text = '<b>Subscription is ' 
-    $text+= $Subscription.Name 
-    $text+= '</b><br>'
-    Add-Content -Path $filename -Value $text
-    forEach ($vm in $vms) 
+    forEach ($vm in ($vms | Where-Object {$_.StorageProfile.OsDisk.OsType -EQ "Windows"})) 
         {
-            $text='VM Name is '
-            $text+=$vm.LicenseType
-            $text+= ' <br>'
-            Add-Content -Path $filename -Value $text
-            $text='VM License is '
-            $text+=$vm.LicenseType
-            $text+= '<br>'
+            $text=$Subscription.Name + "," + $vn.name  + "," + $vm.StorageProfile.OsDisk.OsType + "," + $vm.StorageProfile.ImageReference.Publisher + "," + $vm.StorageProfile.ImageReference.Offer + "," + $vm.StorageProfile.ImageReference.Sku + "," + $vm.LicenseType
             Add-Content -Path $filename -Value $text
         }
     Write-Host "Subscription completed"
