@@ -11,7 +11,7 @@ foreach ($Subscription in $(Get-AzSubscription| Where-Object {$_.State -ne "Disa
     $vms = Get-AzVM
     forEach ($vm in ($vms | Where-Object {$_.StorageProfile.OsDisk.OsType -EQ "Windows"})) 
         {
-            $text=$Subscription.Name + "," + $vn.name  + "," + $vm.StorageProfile.OsDisk.OsType + "," + $vm.StorageProfile.ImageReference.Publisher + "," + $vm.StorageProfile.ImageReference.Offer + "," + $vm.StorageProfile.ImageReference.Sku + "," + $vm.LicenseType
+            $text=$Subscription.Name + "," + $vm.name  + "," + $vm.StorageProfile.OsDisk.OsType + "," + $vm.StorageProfile.ImageReference.Publisher + "," + $vm.StorageProfile.ImageReference.Offer + "," + $vm.StorageProfile.ImageReference.Sku + "," + $vm.LicenseType
             Add-Content -Path $filename -Value $text
         }
     Write-Host "Subscription completed"
