@@ -1,19 +1,26 @@
 Connect-AzAccount
-#$subs = 
 Get-AzSubscription
-#vms = Get-AzVM
 #$vms | ?{$_.LicenseType -like "Windows_Server"} | select ResourceGroupName, Name, LicenseType
 
-Get-AzSubscription -SubscriptionID 97552b17-4562-4277-93bf-38a5817a99ff| Set-AzContext
-$vms = Get-AzVM
-    forEach ($vm in $vms) {
-        Write-Host $vm.Name
-        Write-Host $vm.LicenseType
-    }
-    Write-Host "hello world"
-    
-    
-    #CL-CT-SMO-NPRD ec8540e0-5da9-4bd4-93ae-805a5c50243e
-    #CL-Corp-NPRD                                      97552b17-4562-4277-93bf-38a5817a99ff
-
-    
+$filename='.\HybridBenefit.html'
+foreach ($Subscription in $(Get-AzSubscription| Where-Object {$_.State -ne "Disabled"}))
+{
+    Select-AzSubscription -SubscriptionId $Subscription.SubscriptionId
+    $vms = Get-AzVM
+    $text = '<b>Subscription is ' 
+    $text+= $Subscription.Name 
+    $text+= '</b><br>'
+    Add-Content -Path $filename -Value $text
+    forEach ($vm in $vms) 
+        {
+            $text='VM Name is '
+            $text+=$vm.LicenseType
+            $text+= '<br>'
+            Out-File -FilePath $filename -InputObject $text -Append
+            $text='VM License is '
+            $text+=$vm.LicenseType
+            $text+= '<br>'
+            Out-File -FilePath $filename -InputObject $text -Append
+        }
+    Write-Host "Subscription completed"
+}
