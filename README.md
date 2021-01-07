@@ -2,3 +2,6 @@ Checking all the subscriptions login account has access to in order to confirm A
 
 Multitenant Hosting Rights for Windows 10 have a .LicenseType of "Windows_Client"
 Azure Hybrid Benefit enabled Windows Servers have a .LicenseType of "Windows_Server"
+
+Execution Policy might need to be changed to run powershell scripts:
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
