@@ -15,12 +15,12 @@ foreach ($Subscription in $(Get-AzSubscription| Where-Object {$_.State -ne "Disa
         {
             $text='VM Name is '
             $text+=$vm.LicenseType
-            $text+= '<br>'
-            Out-File -FilePath $filename -InputObject $text -Append
+            $text+= ' <br>'
+            Add-Content -Path $filename -Value $text
             $text='VM License is '
             $text+=$vm.LicenseType
             $text+= '<br>'
-            Out-File -FilePath $filename -InputObject $text -Append
+            Add-Content -Path $filename -Value $text
         }
     Write-Host "Subscription completed"
 }
