@@ -3,8 +3,9 @@ Checks all the subscriptions the login account has access to in order to confirm
 
 Output is a CSV in the format "Subscription, VM Name, VM Type, Publisher, Offer, SKU, Image Reference, License Type, Status, Cost"
 
--Multitenant Hosting Rights for Windows 10 have a .LicenseType of "Windows_Client"
--Azure Hybrid Benefit enabled Windows Servers have a .LicenseType of "Windows_Server"
+Multitenant Hosting Rights for Windows 10 have a .LicenseType of "Windows_Client"
+
+Azure Hybrid Benefit enabled Windows Servers have a .LicenseType of "Windows_Server"
 
 Execution Policy might need to be changed to run Powershell scripts:
 Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
