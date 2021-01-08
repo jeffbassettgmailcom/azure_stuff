@@ -1,9 +1,9 @@
 
 Connect-AzAccount
 Get-AzSubscription
-#$vms | ?{$_.LicenseType -like "Windows_Server"} | select ResourceGroupName, Name, LicenseType
-
-$filename='.\HybridBenefit.csv'
+$startDate = "2020-12-01"
+$EndDate = "2020-12-31"
+$filename = '.\HybridBenefit.csv'
 Add-Content -Path $filename -Value 'Subscription, VM Name, VM Type, Publisher, Offer, SKU, Image Reference, License Type, Status, Cost'
 foreach ($Subscription in $(Get-AzSubscription| Where-Object {$_.State -ne "Disabled"}))
 {
@@ -13,7 +13,7 @@ foreach ($Subscription in $(Get-AzSubscription| Where-Object {$_.State -ne "Disa
         {
             $vminfos=(Get-AzVM -ResourceGroupName $vm.ResourceGroupName-Name $vm.Name -Status)
             $costTotal=0
-            $Consumption=Get-AzConsumptionUsageDetail -StartDate "2020-12-01" -EndDate "2020-12-31" -InstanceName $vm.Name
+            $Consumption=Get-AzConsumptionUsageDetail -StartDate $startDate  -EndDate $EndDate -InstanceName $vm.Name
             $Costs = $Consumption.PretaxCost
              foreach ($Cost in $Costs) { $CostTotal += $Cost}
             $text=$Subscription.Name + "," + $vm.name  + "," + $vm.StorageProfile.OsDisk.OsType + "," + $vm.StorageProfile.ImageReference.Publisher + "," + $vm.StorageProfile.ImageReference.Offer + "," + $vm.StorageProfile.ImageReference.Sku + "," + $vm.StorageProfile.ImageReference.Id + "," + $vm.LicenseType + "," + $vminfos.Statuses[1].Code + "," + $CostTotal
