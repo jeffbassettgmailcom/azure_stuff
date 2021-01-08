@@ -1,3 +1,4 @@
+bene.ps1
 Checks all the subscriptions the login account has access to in order to confirm Azure Hybrid Benefit/Multitenant Hosting Rights are setup correctly (output to CSV). Also includes state of each VM (Powered On, Deallocated) and cost for a set period.
 
 Output is a CSV in the format "Subscription, VM Name, VM Type, Publisher, Offer, SKU, Image Reference, License Type, Status, Cost"
