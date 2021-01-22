@@ -17,3 +17,10 @@ Using the following we can also calculate how much of our hybrid benefit entitle
 Random:
 Execution Policy might need to be changed to run Powershell scripts:
 Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+
+blobcheck.ps1
+
+Checks all Azure storage blob containers to see if public access is turned on and writes to a csv.
+
+Needs the "Storage Account Contributor" role to work.
+
