@@ -1,7 +1,7 @@
 Connect-AzAccount
 Get-AzSubscription
 $filename = 'C:\temp\Blobs.csv'
-Add-Content -Path $filename -Value 'RG, Sub, Container, PublicAccess'
+Add-Content -Path $filename -Value 'Subscription, Resource Group, Storage Account, Containers, PublicAccess'
 foreach ($Subscription in $(Get-AzSubscription| Where-Object {$_.State -ne "Disabled"}))
 {
     Select-AzSubscription -SubscriptionId $Subscription.SubscriptionId
@@ -11,7 +11,7 @@ foreach ($Subscription in $(Get-AzSubscription| Where-Object {$_.State -ne "Disa
                         $storageAccount=Get-AzStorageAccount -ResourceGroupName $sg.ResourceGroupName -Name $sg.StorageAccountName
                         $ctx=$storageAccount.Context
                         $out=Get-AzStorageContainer -Context $ctx
-                        $text = $rg.ResourceGroupName + "," + $sg.StorageAccountName + "," + $out.Name+ "," + $out.PublicAccess
+                        $text = $Subscription.Name  + "," + $sg.ResourceGroupName + "," + $sg.StorageAccountName + "," + $out.Name+ "," + $out.PublicAccess
                         Add-Content -Path $filename -Value $text
                     }
     Write-Host "Subscription completed"
