@@ -1,7 +1,7 @@
 Connect-AzAccount
 Get-AzSubscription
 $filename = 'C:\temp\Blobs.csv'
-Add-Content -Path $filename -Value 'RG, SG, Container, PublicAccess'
+Add-Content -Path $filename -Value 'RG, Sub, Container, PublicAccess'
 foreach ($Subscription in $(Get-AzSubscription| Where-Object {$_.State -ne "Disabled"}))
 {
     Select-AzSubscription -SubscriptionId $Subscription.SubscriptionId
