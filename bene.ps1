@@ -3,7 +3,7 @@ Connect-AzAccount
 Get-AzSubscription
 $startDate = "2020-12-01"
 $EndDate = "2020-12-31"
-$filename = '.\HybridBenefit.csv'
+$filename = 'c:\temp\HybridBenefit.csv'
 Add-Content -Path $filename -Value 'Subscription, VM Name, VM Type, Publisher, Offer, SKU, Image Reference, License Type, Status, Cost'
 foreach ($Subscription in $(Get-AzSubscription| Where-Object {$_.State -ne "Disabled"}))
 {
